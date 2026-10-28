@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>UTCC Student Profile</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #F3F6FC; font-family: "Sarabun", "Noto Sans Thai", "Tahoma", system-ui, sans-serif; }
+  .screen { max-width: 480px; margin: 0 auto; background: #F3F6FC; min-height: 100vh; }
+
+  .hero { position: relative; background: #0F2A4A center / cover no-repeat; padding: 54px 24px 62px;
+          border-radius: 0 0 36px 36px; overflow: hidden; }
+  .hero-overlay { position: absolute; inset: 0; background: rgba(11, 34, 61, 0.70); }
+  .hero > * { position: relative; }
+  .brand { color: #fff; font-size: 14px; font-weight: 800; letter-spacing: 3px; }
+  .top-label { color: #8DB7E9; font-size: 10px; letter-spacing: 2px; margin-top: 6px; }
+
+  .profile-area { display: flex; flex-direction: column; align-items: center; margin-top: 28px;
+                  animation: float 4s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  .avatar-border { width: 136px; height: 136px; border-radius: 50%; padding: 5px; border: 2px solid #60A5FA;
+                   background: rgba(255,255,255,0.15); box-shadow: 0 8px 10px rgba(0,0,0,0.25); }
+  .avatar { width: 100%; height: 100%; border-radius: 50%; background: #DDE7F3; object-fit: cover; display: block; }
+  .name { color: #fff; font-size: 25px; font-weight: 800; margin-top: 18px; text-align: center; }
+  .nickname { color: #B9D1ED; margin-top: 7px; font-size: 13px; letter-spacing: 1px; }
+  .year-badge { margin-top: 15px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1);
+                border-radius: 20px; padding: 7px 17px; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+
+  .content { padding: 0 20px; margin-top: -28px; position: relative; }
+  .id-card { background: #fff; border-radius: 18px; padding: 20px; box-shadow: 0 4px 12px rgba(24,56,92,0.08); }
+  .muted { color: #8392A7; font-size: 10px; letter-spacing: 2px; font-weight: 700; }
+  .id-number { color: #15365D; font-size: 20px; font-weight: 800; margin-top: 8px; }
+
+  .section-heading { margin: 29px 0 14px; }
+  .section-subtitle { color: #4388CC; font-size: 10px; font-weight: 800; letter-spacing: 2px; }
+  .section-title { color: #183555; font-size: 20px; font-weight: 800; margin-top: 5px; }
+
+  .card { background: #fff; border-radius: 18px; padding: 5px 17px; }
+  .info-row { padding: 14px 0; border-bottom: 1px solid #EDF1F7; }
+  .info-row.last { border-bottom: 0; }
+  .info-label { color: #8A96A8; font-size: 12px; margin-bottom: 6px; }
+  .info-value { color: #243C5A; font-size: 14px; font-weight: 600; }
+
+  .semester-card { background: #E5EFFB; border-radius: 17px; padding: 15px; display: flex; align-items: center; margin-bottom: 12px; }
+  .semester-icon { width: 48px; height: 48px; border-radius: 14px; background: #fff; display: flex;
+                   align-items: center; justify-content: center; margin-right: 12px; font-size: 25px; }
+  .semester-body { flex: 1; }
+  .semester-title { color: #18385D; font-size: 16px; font-weight: 800; }
+  .semester-sub { color: #687991; font-size: 12px; margin-top: 5px; }
+  .count-badge { background: #fff; padding: 7px 10px; border-radius: 10px; color: #3679BF; font-size: 11px; font-weight: 700; }
+
+  .course-card { border-radius: 15px; padding: 14px; margin-bottom: 10px; display: flex; align-items: center; border-left: 5px solid; }
+  .course-no { width: 43px; height: 43px; border-radius: 12px; background: #fff; display: flex;
+               align-items: center; justify-content: center; margin-right: 12px; font-weight: 800; font-size: 15px; }
+  .course-body { flex: 1; }
+  .course-name { color: #233C5B; font-weight: 800; font-size: 14px; }
+  .course-sub { color: #687991; font-size: 11px; margin-top: 6px; }
+
+  .footer { text-align: center; padding: 30px 0 35px; }
+  .footer-title { color: #23466E; font-size: 12px; font-weight: 800; letter-spacing: 3px; }
+  .footer-text { color: #98A3B3; font-size: 11px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="screen" id="app"></div>
+
+<!-- ข้อมูลนักศึกษาในรูปแบบ JSON -->
+<script id="student-data" type="application/json">
+{
+  "id": "2410511106013",
+  "firstName": "ณัฐพล",
+  "lastName": "อัปการัตน์",
+  "nickname": "เฟิร์ส",
+  "university": "มหาวิทยาลัยหอการค้าไทย (UTCC)",
+  "faculty": "คณะวิทยาศาสตร์",
+  "major": "Information and Communication Technology",
+  "year": "3",
+  "gpa": "2.64",
+  "semester": "เทอมต้น",
+  "academicYear": "2569",
+  "photo": "https://i.pinimg.com/280x280_RS/fa/39/79/fa3979e7298af08c2940d03db16ab1e8.jpg",
+  "coverPhoto": "https://i.pinimg.com/originals/ec/4a/67/ec4a67af3e061dc92c2e4d1a810bcec9.gif",
+  "courses": [
+    { "code": "SI342-1 ",  "day": "วันจันทร์", "room": "15201A", "building": "อาคาร 15", "time": "08:30–12:20", "color": "#F6C400", "bg": "#FFF9E8" },
+    { "code": "GE923-1 ",  "day": "วันอังคาร", "room": "7204",   "building": "อาคาร 07", "time": "08:30–11:00", "color": "#F34F9B", "bg": "#FFF0F7" },
+    { "code": "SI443-1 ",  "day": "วันอังคาร", "room": "1205B",  "building": "อาคาร 01", "time": "12:20–16:10", "color": "#F34F9B", "bg": "#FFF0F7" },
+    { "code": "SI361-1 ",  "day": "วันพุธ",    "room": "1205A",  "building": "อาคาร 01", "time": "08:30–12:20", "color": "#75B900", "bg": "#F7FCEB" },
+    { "code": "SI237-1 ",  "day": "วันพุธ",    "room": "1304",   "building": "อาคาร 01", "time": "14:30–17:00", "color": "#75B900", "bg": "#F7FCEB" },
+    { "code": "SI227-59 ", "day": "วันเสาร์",  "room": "15201B", "building": "อาคาร 15", "time": "08:30–16:10", "color": "#DFA6E9", "bg": "#FAF0FC" }
+  ]
+}
+</script>
+
+<script>
+  const student = JSON.parse(document.getElementById('student-data').textContent);
+
+  const info = (label, value, last) =>
+    `<div class="info-row${last ? ' last' : ''}"><div class="info-label">${label}</div><div class="info-value">${value}</div></div>`;
+
+  const section = (title, subtitle) =>
+    `<div class="section-heading"><div class="section-subtitle">${subtitle}</div><div class="section-title">${title}</div></div>`;
+
+  const courses = student.courses.map((c, i) => `
+    <div class="course-card" style="border-left-color:${c.color};background:${c.bg}">
+      <div class="course-no" style="color:${c.color}">${String(i + 1).padStart(2, '0')}</div>
+      <div class="course-body">
+        <div class="course-name">${c.code}</div>
+        <div class="course-sub">${c.day} · ${c.time}</div>
+        <div class="course-sub">ห้อง ${c.room} ${c.building}</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('app').innerHTML = `
+    <div class="hero" style="background-image:url('${student.coverPhoto}')">
+      <div class="hero-overlay"></div>
+      <div class="brand">UTCC</div>
+      <div class="top-label">STUDENT PORTFOLIO</div>
+      <div class="profile-area">
+        <div class="avatar-border"><img class="avatar" src="${student.photo}" alt="" referrerpolicy="no-referrer"></div>
+        <div class="name">${student.firstName} ${student.lastName}</div>
+        <div class="nickname">${student.nickname} · STUDENT</div>
+        <div class="year-badge">YEAR ${student.year}</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="id-card">
+        <div class="muted">STUDENT ID</div>
+        <div class="id-number">${student.id}</div>
+      </div>
+
+      ${section('ข้อมูลนักศึกษา', 'STUDENT INFORMATION')}
+      <div class="card">
+        ${info('ชื่อ–นามสกุล', student.firstName + ' ' + student.lastName)}
+        ${info('มหาวิทยาลัย', student.university)}
+        ${info('คณะ', student.faculty)}
+        ${info('สาขาวิชา', student.major)}
+        ${info('ชั้นปี', 'ปี ' + student.year)}
+        ${info('เกรดเฉลี่ยสะสม', student.gpa, true)}
+      </div>
+
+      ${section('รายวิชาที่ลงทะเบียน', 'REGISTERED COURSES')}
+      <div class="semester-card">
+        <div class="semester-icon">▤</div>
+        <div class="semester-body">
+          <div class="semester-title">${student.semester}</div>
+          <div class="semester-sub">ปีการศึกษา ${student.academicYear}</div>
+        </div>
+        <div class="count-badge">${student.courses.length} วิชา</div>
+      </div>
+      ${courses}
+
+      <div class="footer">
+        <div class="footer-title">UTCC STUDENT PROFILE</div>
+        <div class="footer-text">University of the Thai Chamber of Commerce</div>
+        <div class="footer-text">Academic Year ${student.academicYear}</div>
+      </div>
+    </div>`;
+</script>
+</body>
+</html>
